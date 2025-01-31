@@ -1,0 +1,6 @@
+﻿services:
+  pairprogress.backend:
+    image: pairprogress.backend
+    build:
+      context: .
+      dockerfile: PairProgress.Backend/Dockerfile
