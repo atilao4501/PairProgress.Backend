@@ -31,6 +31,7 @@ namespace PairProgress.Backend.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
+                    UserCode = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: false),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -49,6 +50,7 @@ namespace PairProgress.Backend.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                    table.UniqueConstraint("AK_AspNetUsers_UserCode", x => x.UserCode);
                 });
 
             migrationBuilder.CreateTable(
@@ -157,6 +159,32 @@ namespace PairProgress.Backend.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "UserDuos",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    User1Code = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: false),
+                    User2Code = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserDuos", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserDuos_AspNetUsers_User1Code",
+                        column: x => x.User1Code,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "UserCode",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_UserDuos_AspNetUsers_User2Code",
+                        column: x => x.User2Code,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "UserCode",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -189,9 +217,27 @@ namespace PairProgress.Backend.Migrations
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_UserCode",
+                table: "AspNetUsers",
+                column: "UserCode",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserDuos_User1Code",
+                table: "UserDuos",
+                column: "User1Code",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserDuos_User2Code",
+                table: "UserDuos",
+                column: "User2Code",
                 unique: true);
         }
 
@@ -212,6 +258,9 @@ namespace PairProgress.Backend.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "UserDuos");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

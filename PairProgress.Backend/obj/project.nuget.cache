@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "6I70oYRG1Xc=",
+  "dgSpecHash": "PlW+VH02JmA=",
   "success": true,
   "projectFilePath": "/Volumes/REDRAGON/DocumentosSsd/Estudos/NET/PairProgress.Backend/PairProgress.Backend/PairProgress.Backend.csproj",
   "expectedPackageFiles": [
@@ -9,6 +9,7 @@
     "/Users/atilaalcantara/.nuget/packages/microsoft.aspnetcore.authentication.abstractions/2.3.0/microsoft.aspnetcore.authentication.abstractions.2.3.0.nupkg.sha512",
     "/Users/atilaalcantara/.nuget/packages/microsoft.aspnetcore.authentication.cookies/2.3.0/microsoft.aspnetcore.authentication.cookies.2.3.0.nupkg.sha512",
     "/Users/atilaalcantara/.nuget/packages/microsoft.aspnetcore.authentication.core/2.3.0/microsoft.aspnetcore.authentication.core.2.3.0.nupkg.sha512",
+    "/Users/atilaalcantara/.nuget/packages/microsoft.aspnetcore.authentication.jwtbearer/9.0.2/microsoft.aspnetcore.authentication.jwtbearer.9.0.2.nupkg.sha512",
     "/Users/atilaalcantara/.nuget/packages/microsoft.aspnetcore.cryptography.internal/9.0.1/microsoft.aspnetcore.cryptography.internal.9.0.1.nupkg.sha512",
     "/Users/atilaalcantara/.nuget/packages/microsoft.aspnetcore.cryptography.keyderivation/9.0.1/microsoft.aspnetcore.cryptography.keyderivation.9.0.1.nupkg.sha512",
     "/Users/atilaalcantara/.nuget/packages/microsoft.aspnetcore.dataprotection/2.3.0/microsoft.aspnetcore.dataprotection.2.3.0.nupkg.sha512",
@@ -58,6 +59,8 @@
     "/Users/atilaalcantara/.nuget/packages/microsoft.identitymodel.abstractions/8.3.1/microsoft.identitymodel.abstractions.8.3.1.nupkg.sha512",
     "/Users/atilaalcantara/.nuget/packages/microsoft.identitymodel.jsonwebtokens/8.3.1/microsoft.identitymodel.jsonwebtokens.8.3.1.nupkg.sha512",
     "/Users/atilaalcantara/.nuget/packages/microsoft.identitymodel.logging/8.3.1/microsoft.identitymodel.logging.8.3.1.nupkg.sha512",
+    "/Users/atilaalcantara/.nuget/packages/microsoft.identitymodel.protocols/8.0.1/microsoft.identitymodel.protocols.8.0.1.nupkg.sha512",
+    "/Users/atilaalcantara/.nuget/packages/microsoft.identitymodel.protocols.openidconnect/8.0.1/microsoft.identitymodel.protocols.openidconnect.8.0.1.nupkg.sha512",
     "/Users/atilaalcantara/.nuget/packages/microsoft.identitymodel.tokens/8.3.1/microsoft.identitymodel.tokens.8.3.1.nupkg.sha512",
     "/Users/atilaalcantara/.nuget/packages/microsoft.net.http.headers/2.3.0/microsoft.net.http.headers.2.3.0.nupkg.sha512",
     "/Users/atilaalcantara/.nuget/packages/microsoft.netcore.platforms/2.0.0/microsoft.netcore.platforms.2.0.0.nupkg.sha512",

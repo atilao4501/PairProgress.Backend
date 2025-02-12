@@ -18,24 +18,64 @@ public class AuthController : ControllerBase
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginModel loginModel)
     {
-        var token = await _authService.Login(loginModel);
-        if (token == null)
+        var response = new DefaultReturn();
+        try
         {
-            return Unauthorized();
+            var token = await _authService.Login(loginModel);
+            if (token == null)
+            {
+                response.Success = false;
+                response.Message = "Unauthorized";
+                return Unauthorized(response);
+            }
+    
+            response.Success = true;
+            response.Data = token;
+            return Ok(response);
         }
-
-        return Ok(token);
+        catch (PersonalizedException ex)
+        {
+            response.Success = false;
+            response.Message = ex.Message;
+            return BadRequest(response);
+        }
+        catch (Exception ex)
+        {
+            response.Success = false;
+            response.Message = "An error occurred.";
+            return StatusCode(500, response);
+        }
     }
     
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterUserModel registerUserModel)
     {
-        var result = await _authService.Register(registerUserModel);
-        if (!result)
+        var response = new DefaultReturn();
+        try
         {
-            return BadRequest();
+            var result = await _authService.Register(registerUserModel);
+            if (!result)
+            {
+                response.Success = false;
+                response.Message = "Registration failed";
+                return BadRequest(response);
+            }
+    
+            response.Success = true;
+            response.Message = "Registration successful";
+            return Ok(response);
         }
-
-        return Ok();
+        catch (PersonalizedException ex)
+        {
+            response.Success = false;
+            response.Message = ex.Message;
+            return BadRequest(response);
+        }
+        catch (Exception ex)
+        {
+            response.Success = false;
+            response.Message = "An error occurred.";
+            return StatusCode(500, response);
+        }
     }
 }

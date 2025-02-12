@@ -142,3 +142,7 @@
 /Volumes/REDRAGON/DocumentosSsd/Estudos/NET/PairProgress.Backend/PairProgress.Backend/bin/Debug/net9.0/Microsoft.IdentityModel.Logging.dll
 /Volumes/REDRAGON/DocumentosSsd/Estudos/NET/PairProgress.Backend/PairProgress.Backend/bin/Debug/net9.0/Microsoft.IdentityModel.Tokens.dll
 /Volumes/REDRAGON/DocumentosSsd/Estudos/NET/PairProgress.Backend/PairProgress.Backend/bin/Debug/net9.0/System.IdentityModel.Tokens.Jwt.dll
+/Volumes/REDRAGON/DocumentosSsd/Estudos/NET/PairProgress.Backend/PairProgress.Backend/obj/Debug/net9.0/PairProgress.Backend.sourcelink.json
+/Volumes/REDRAGON/DocumentosSsd/Estudos/NET/PairProgress.Backend/PairProgress.Backend/bin/Debug/net9.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/Volumes/REDRAGON/DocumentosSsd/Estudos/NET/PairProgress.Backend/PairProgress.Backend/bin/Debug/net9.0/Microsoft.IdentityModel.Protocols.dll
+/Volumes/REDRAGON/DocumentosSsd/Estudos/NET/PairProgress.Backend/PairProgress.Backend/bin/Debug/net9.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll

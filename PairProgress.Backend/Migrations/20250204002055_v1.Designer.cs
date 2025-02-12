@@ -12,7 +12,7 @@ using PairProgress.Backend.Data;
 namespace PairProgress.Backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250131034254_v1")]
+    [Migration("20250204002055_v1")]
     partial class v1
     {
         /// <inheritdoc />
@@ -205,6 +205,11 @@ namespace PairProgress.Backend.Migrations
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("boolean");
 
+                    b.Property<string>("UserCode")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)");
+
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
@@ -218,7 +223,39 @@ namespace PairProgress.Backend.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex");
 
+                    b.HasIndex("UserCode")
+                        .IsUnique();
+
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("PairProgress.Backend.Models.UserDuo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("User1Code")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)");
+
+                    b.Property<string>("User2Code")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("User1Code")
+                        .IsUnique();
+
+                    b.HasIndex("User2Code")
+                        .IsUnique();
+
+                    b.ToTable("UserDuos");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -270,6 +307,27 @@ namespace PairProgress.Backend.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("PairProgress.Backend.Models.UserDuo", b =>
+                {
+                    b.HasOne("PairProgress.Backend.Models.User", "User1")
+                        .WithOne()
+                        .HasForeignKey("PairProgress.Backend.Models.UserDuo", "User1Code")
+                        .HasPrincipalKey("PairProgress.Backend.Models.User", "UserCode")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("PairProgress.Backend.Models.User", "User2")
+                        .WithOne()
+                        .HasForeignKey("PairProgress.Backend.Models.UserDuo", "User2Code")
+                        .HasPrincipalKey("PairProgress.Backend.Models.User", "UserCode")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("User1");
+
+                    b.Navigation("User2");
                 });
 #pragma warning restore 612, 618
         }
