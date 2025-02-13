@@ -26,6 +26,7 @@ public class PairController : ControllerBase
             var result = await _pairService.CreatePair(userCode1, userCode2);
             response.Success = true;
             response.Data = result;
+            response.Message = "Pair created successfully.";
             return Ok(response);
         }
         catch (PersonalizedException ex)
@@ -51,6 +52,7 @@ public class PairController : ControllerBase
             var result = await _pairService.DeletePair(userCode);
             response.Success = true;
             response.Data = result;
+            response.Message = "Pair deleted successfully.";
             return Ok(response);
         }
         catch (PersonalizedException ex)
@@ -67,7 +69,7 @@ public class PairController : ControllerBase
         }
     }
     
-    [HttpGet("{id}")]
+    [HttpGet("{userCode}")]
     public async Task<IActionResult> GetPairByUserCode(string userCode)
     {
         var response = new DefaultReturn();
@@ -76,6 +78,7 @@ public class PairController : ControllerBase
             var result = await _pairService.GetPairByUserCode(userCode);
             response.Success = true;
             response.Data = result;
+            response.Message = "Pair retrieved successfully.";
             return Ok(response);
         }
         catch (PersonalizedException ex)

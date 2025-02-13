@@ -30,6 +30,7 @@ public class AuthController : ControllerBase
             }
     
             response.Success = true;
+            response.Message = "Login successful";
             response.Data = token;
             return Ok(response);
         }
