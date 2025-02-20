@@ -1,6 +1,6 @@
 namespace PairProgress.Backend.Models;
 
-public class NewGoal
+public class UpdateGoalInput
 {
     public int Id { get; set; }
     public string Name { get; set; }

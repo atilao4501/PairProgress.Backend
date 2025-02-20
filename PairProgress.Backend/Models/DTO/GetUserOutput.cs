@@ -1,6 +1,6 @@
 namespace PairProgress.Backend.Models;
 
-public class UserReturn
+public class GetUserOutput
 {
     public string UserCode { get; set; }
     public string UserName { get; set; }

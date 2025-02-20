@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PairProgress.Backend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+59792155dbd292c38ab37ac2f36c21331842aef4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9e70e37f757ea929454fcbcbfbdd362c1a49a96e")]
 [assembly: System.Reflection.AssemblyProductAttribute("PairProgress.Backend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PairProgress.Backend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

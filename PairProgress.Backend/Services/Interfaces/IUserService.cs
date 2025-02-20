@@ -4,5 +4,6 @@ namespace PairProgress.Backend.Services.Interfaces;
 
 public interface IUserService
 {
-    public Task<UserReturn> GetUserByCode(string userCode);
+    public Task<GetUserOutput> GetUserByCode(string userCode);
+    public Task EditUserByCode(UpdateUserInput userInput);
 }

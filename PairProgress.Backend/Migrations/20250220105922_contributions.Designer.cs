@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PairProgress.Backend.Data;
@@ -11,9 +12,11 @@ using PairProgress.Backend.Data;
 namespace PairProgress.Backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250220105922_contributions")]
+    partial class contributions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -175,8 +178,6 @@ namespace PairProgress.Backend.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("GoalId");
 
                     b.HasIndex("UserId");
 
@@ -376,17 +377,9 @@ namespace PairProgress.Backend.Migrations
 
             modelBuilder.Entity("PairProgress.Backend.Models.Contribution", b =>
                 {
-                    b.HasOne("PairProgress.Backend.Models.Goal", "Goal")
-                        .WithMany()
-                        .HasForeignKey("GoalId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("PairProgress.Backend.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
-
-                    b.Navigation("Goal");
 
                     b.Navigation("User");
                 });

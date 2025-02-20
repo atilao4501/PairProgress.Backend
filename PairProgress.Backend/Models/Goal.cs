@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace PairProgress.Backend.Models;
 
 public class Goal
@@ -9,5 +11,9 @@ public class Goal
     public decimal CurrentAmount { get; set; } 
     public DateTime Date { get; set; }
     public decimal RecommendedInvestmentPerMonth { get; set; }
+    [JsonIgnore]
     public User User { get; set; }
+    public string AutorName => User.UserName;
+    
+    
 }
