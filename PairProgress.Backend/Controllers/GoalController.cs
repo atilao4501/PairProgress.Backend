@@ -120,4 +120,28 @@ public class GoalController : ControllerBase
             });
         }
     }
+
+    [HttpDelete]
+    public async Task<IActionResult> RemoveGoal(int goalId)
+    {
+        try
+        {
+            await _goalService.RemoveGoalById(goalId);
+            return Ok(new DefaultReturn
+            {
+                Success = true,
+                Message = "Goal deleted successfully",
+                Data = null
+            });
+        }
+        catch (PersonalizedException ex)
+        {
+            return BadRequest(new DefaultReturn
+            {
+                Success = false,
+                Message = ex.Message,
+                Data = null
+            });
+        }
+    }
 }

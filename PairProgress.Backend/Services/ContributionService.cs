@@ -36,6 +36,20 @@ public class ContributionService : IContributionService
         await _dbContext.SaveChangesAsync();
     }
 
+    public async Task RemoveContributionAsync(int contributionId)
+    {
+        var contributionDb = await _dbContext.Contributions
+            .FirstOrDefaultAsync(c => c.Id == contributionId);
+        
+        if (contributionDb == null)
+        {
+            throw new PersonalizedException("Contribution not found");
+        }
+        
+        _dbContext.Contributions.Remove(contributionDb);
+        await _dbContext.SaveChangesAsync();
+    }
+
     public async Task<IEnumerable<Contribution>> GetContributionsByGoalAsync(int goalId)
     {
         var goalDb = await _dbContext.Goals

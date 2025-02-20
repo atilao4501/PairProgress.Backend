@@ -45,5 +45,12 @@ public class AppDbContext(DbContextOptions options) : IdentityDbContext<User>(op
             .HasOne(g => g.User)
             .WithMany(u => u.Goals)
             .OnDelete(DeleteBehavior.Cascade);
+        
+        modelBuilder.Entity<Goal>()
+            .HasMany(g => g.Contributions)
+            .WithOne(c => c.Goal)
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        
     }
 }

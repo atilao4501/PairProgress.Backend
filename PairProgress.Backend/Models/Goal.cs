@@ -13,6 +13,8 @@ public class Goal
     public decimal RecommendedInvestmentPerMonth { get; set; }
     [JsonIgnore]
     public User User { get; set; }
+    
+    public List<Contribution> Contributions { get; set; }
     public string AutorName => User.UserName;
     
     

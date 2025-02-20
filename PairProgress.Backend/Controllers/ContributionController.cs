@@ -64,4 +64,28 @@ public class ContributionController : ControllerBase
                 });
             }
         }
+        
+        [HttpDelete]
+        public async Task<IActionResult> DeleteContribution(int contributionId)
+        {
+            try
+            {
+                await _contributionService.RemoveContributionAsync(contributionId);
+                return Ok(new DefaultReturn
+                {
+                    Success = true,
+                    Message = "Contribution deleted successfully",
+                    Data = null
+                });
+            }
+            catch (PersonalizedException ex)
+            {
+                return BadRequest(new DefaultReturn
+                {
+                    Success = false,
+                    Message = ex.Message,
+                    Data = null
+                });
+            }
+        } 
 }

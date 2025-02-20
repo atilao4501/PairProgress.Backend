@@ -53,15 +53,19 @@ public class GoalService : IGoalService
 
         var userDuo = await _dbContext.UserDuos
             .Include(ud => ud.User1) 
-            .Include(ud => ud.User2) 
+            .Include(ud => ud.User2)
             .FirstOrDefaultAsync(ud => ud.User1Code == userCode || ud.User2Code == userCode);
         
         if (userDuo != null)
         {
-            return await _dbContext.Goals.Where(g => g.User == userDuo.User1 || g.User == userDuo.User2).ToListAsync();
+            return await _dbContext.Goals
+                .Include(g => g.Contributions)
+                .Where(g => g.User == userDuo.User1 || g.User == userDuo.User2).ToListAsync();
         }
         
-         return await _dbContext.Goals.Where(g => g.User == user).ToListAsync();
+         return await _dbContext.Goals
+             .Include(g => g.Contributions)
+             .Where(g => g.User == user).ToListAsync();
     }
 
     public async Task EditGoalById(UpdateGoalInput goalInput)
@@ -86,6 +90,7 @@ public class GoalService : IGoalService
     {
         var goal = await _dbContext.Goals
             .Include(g => g.User)
+            .Include(g => g.Contributions)
             .FirstOrDefaultAsync(g => g.Id == goalId);
 
         if (goal == null)
@@ -94,5 +99,17 @@ public class GoalService : IGoalService
         }
 
         return goal;
+    }
+
+    public async Task RemoveGoalById(int goalId)
+    {
+        var goal = await _dbContext.Goals.FirstOrDefaultAsync(g => g.Id == goalId);
+        if (goal == null)
+        {
+            throw new PersonalizedException("Goal not found");
+        }
+
+        _dbContext.Goals.Remove(goal);
+        await _dbContext.SaveChangesAsync();
     }
 }

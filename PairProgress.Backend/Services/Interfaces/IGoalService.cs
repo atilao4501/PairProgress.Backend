@@ -8,4 +8,5 @@ public interface IGoalService
     public Task<List<Goal>> GetGoalsByUserCode(string userCode);
     public Task EditGoalById(UpdateGoalInput goalInput);
     public Task<Goal> GetGoalById(int goalId);
+    public Task RemoveGoalById(int goalId);
 }
