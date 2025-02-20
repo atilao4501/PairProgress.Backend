@@ -17,7 +17,7 @@ public class UserService : IUserService
         _context = context;
     }
     
-    public async Task<UserReturn> GetUserByCode(string userCode)
+    public async Task<GetUserOutput> GetUserByCode(string userCode)
     {
         var userDb = await _userManager.Users.FirstOrDefaultAsync(u => u.UserCode == userCode);
 
@@ -27,7 +27,7 @@ public class UserService : IUserService
         }
         
         
-        var userReturn = new UserReturn
+        var userReturn = new GetUserOutput
         {
             UserName = userDb.UserName,
             UserCode = userDb.UserCode,
@@ -62,5 +62,21 @@ public class UserService : IUserService
 
         return userReturn;
 
+    }
+
+    public async Task EditUserByCode(UpdateUserInput updateUserInput)
+    {
+        var userDb = await _userManager.Users.FirstOrDefaultAsync(u => u.UserCode == updateUserInput.UserCode);
+        
+        if (userDb == null)
+        {
+            throw new PersonalizedException("User not found with the provided code.");
+        }
+        
+        userDb.UserName = updateUserInput.Username;
+        userDb.Email = updateUserInput.Email;
+
+        await _userManager.UpdateAsync(userDb);
+        
     }
 }

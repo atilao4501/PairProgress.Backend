@@ -40,4 +40,29 @@ public class UserController : ControllerBase
             return StatusCode(500, response);
         }
     }
+    
+    [HttpPut]
+    public async Task<IActionResult> EditUserByCode(UpdateUserInput userInput)
+    {
+        var response = new DefaultReturn();
+        try
+        {
+            await _userService.EditUserByCode(userInput);
+            response.Success = true;
+            response.Message = "User edited successfully.";
+            return Ok(response);
+        }
+        catch (PersonalizedException ex)
+        {
+            response.Success = false;
+            response.Message = ex.Message;
+            return BadRequest(response);
+        }
+        catch (Exception ex)
+        {
+            response.Success = false;
+            response.Message = "An error occurred.";
+            return StatusCode(500, response);
+        }
+    }
 }

@@ -8,6 +8,8 @@ namespace PairProgress.Backend.Data;
 public class AppDbContext(DbContextOptions options) : IdentityDbContext<User>(options)
 {
     public DbSet<UserDuo> UserDuos { get; set; }
+    public DbSet<Goal> Goals { get; set; }
+    public DbSet<Contribution> Contributions { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -38,6 +40,10 @@ public class AppDbContext(DbContextOptions options) : IdentityDbContext<User>(op
         modelBuilder.Entity<UserDuo>()
             .HasIndex(duo => duo.User2Code)
             .IsUnique();
-
+        
+        modelBuilder.Entity<Goal>()
+            .HasOne(g => g.User)
+            .WithMany(u => u.Goals)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }
