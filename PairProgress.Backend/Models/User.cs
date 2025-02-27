@@ -9,6 +9,5 @@ public class User : IdentityUser
     [Required]
     [MaxLength(10)]
     public string UserCode { get; set; }
-    
     public List<Goal> Goals { get; set; }
 }

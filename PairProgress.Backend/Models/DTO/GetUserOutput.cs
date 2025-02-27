@@ -8,4 +8,6 @@ public class GetUserOutput
     public string? PairName { get; set; }
     public string? PairEmail { get; set; }
     public string? PairCode { get; set; }
+    
+    
 }

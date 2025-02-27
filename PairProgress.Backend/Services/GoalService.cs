@@ -35,7 +35,7 @@ public class GoalService : IGoalService
             Description = goalInput.Description,
             TargetAmount = goalInput.TargetAmount,
             CurrentAmount = goalInput.CurrentAmount,
-            Date = goalInput.Date,
+            Date = goalInput.Date.ToUniversalTime(),
             RecommendedInvestmentPerMonth = goalInput.RecommendedInvestmentPerMonth
         };
 
@@ -80,7 +80,7 @@ public class GoalService : IGoalService
         goal.Description = goalInput.Description;
         goal.TargetAmount = goalInput.TargetAmount;
         goal.CurrentAmount = goalInput.CurrentAmount;
-        goal.Date = goalInput.Date;
+        goal.Date = goalInput.Date.ToUniversalTime();
         goal.RecommendedInvestmentPerMonth = goalInput.RecommendedInvestmentPerMonth;
 
         await _dbContext.SaveChangesAsync();
