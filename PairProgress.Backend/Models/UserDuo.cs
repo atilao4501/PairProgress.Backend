@@ -6,6 +6,7 @@ namespace PairProgress.Backend.Models;
 public class UserDuo
 {
     [Key]
+    [MaxLength(255)]
     public int Id { get; set; }
     
     [Required]

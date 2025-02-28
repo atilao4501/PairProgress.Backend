@@ -15,7 +15,9 @@ builder.Configuration.AddJsonFile($"appsettings.{builder.Environment.Environment
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+// builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<AppDbContext>(options => options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
+    ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))));
 builder.Services.AddControllers();
 
 builder.Services.AddCors(options =>
@@ -40,10 +42,10 @@ builder.Services.AddAuthentication(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters
     {
-        ValidateIssuer = false, // Desativa a validação do Issuer
-        ValidateAudience = false, // Desativa a validação do Audience
-        ValidateLifetime = true, // Mantém a validação de expiração do token
-        ValidateIssuerSigningKey = true, // Continua validando a chave de assinatura
+        ValidateIssuer = false, 
+        ValidateAudience = false,
+        ValidateLifetime = true, 
+        ValidateIssuerSigningKey = true, 
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SigningKey"]))
     };
 });

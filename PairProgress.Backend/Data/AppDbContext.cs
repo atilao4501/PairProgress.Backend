@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using PairProgress.Backend.Models;
@@ -14,6 +15,14 @@ public class AppDbContext(DbContextOptions options) : IdentityDbContext<User>(op
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+        
+        modelBuilder.Entity<User>()
+            .Property(r => r.Id)
+            .HasMaxLength(256);
+
+        modelBuilder.Entity<IdentityRole>()
+            .Property(r => r.Id)
+            .HasMaxLength(255);
         
         modelBuilder.Entity<User>()
             .HasIndex(u => u.UserCode)
