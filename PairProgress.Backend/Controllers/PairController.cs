@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PairProgress.Backend.Models;
@@ -11,18 +12,21 @@ namespace PairProgress.Backend.Controllers;
 public class PairController : ControllerBase
 {
     private readonly IPairService _pairService;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public PairController(IPairService pairService)
+    public PairController(IPairService pairService, IHttpContextAccessor httpContextAccessor)
     {
         _pairService = pairService;
+        _httpContextAccessor = httpContextAccessor;
     }
     
     [HttpPost]
-    public async Task<IActionResult> CreatePair(string userCode1, string userCode2)
+    public async Task<IActionResult> AddPair(string userCode2)
     {
         var response = new DefaultReturn();
         try
         {
+            var userCode1 =_httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.Name)?.Value;
             var result = await _pairService.CreatePair(userCode1, userCode2);
             response.Success = true;
             response.Data = result;
@@ -44,11 +48,13 @@ public class PairController : ControllerBase
     }
     
     [HttpDelete]
-    public async Task<IActionResult> DeletePair(string userCode)
+    public async Task<IActionResult> DeletePairByToken()
     {
         var response = new DefaultReturn();
         try
         {
+            var userCode = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.Name)?.Value;
+            
             var result = await _pairService.DeletePair(userCode);
             response.Success = true;
             response.Data = result;

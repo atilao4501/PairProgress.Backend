@@ -26,7 +26,7 @@ public class UserController : ControllerBase
         var response = new DefaultReturn();
         try
         {
-            var userCode = _contextAccessor.HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
+            var userCode = _contextAccessor.HttpContext?.User.FindFirst(ClaimTypes.Name)?.Value;
             var users = await _userService.GetUserByUserCode(userCode);
             response.Success = true;
             response.Data = users;
@@ -48,12 +48,14 @@ public class UserController : ControllerBase
     }
     
     [HttpPut]
-    public async Task<IActionResult> EditUserByCode(UpdateUserInput userInput)
+    [Authorize]
+    public async Task<IActionResult> EditUserByToken(UpdateUserInput userInput)
     {
         var response = new DefaultReturn();
         try
         {
-            await _userService.EditUserByCode(userInput);
+            var userCode = _contextAccessor.HttpContext?.User.FindFirst(ClaimTypes.Name)?.Value;
+            await _userService.EditUserByCode(userInput, userCode);
             response.Success = true;
             response.Message = "User edited successfully.";
             return Ok(response);
@@ -103,6 +105,32 @@ public class UserController : ControllerBase
             response.Data = exists;
             response.Message = exists ? "Email exists." : "Email does not exist.";
             return Ok(response);
+        }
+        catch (Exception ex)
+        {
+            response.Success = false;
+            response.Message = "An error occurred.";
+            return StatusCode(500, response);
+        }
+    }
+    
+    [HttpGet("{userCode}")]
+    public async Task<IActionResult> GetUserNameByUserCode(string userCode)
+    {
+        var response = new DefaultReturn();
+        try
+        {
+            var user = await _userService.GetUserByUserCode(userCode);
+            response.Success = true;
+            response.Data = user.UserName;
+            response.Message = "UserName retrieved successfully.";
+            return Ok(response);
+        }
+        catch (PersonalizedException ex)
+        {
+            response.Success = false;
+            response.Message = ex.Message;
+            return BadRequest(response);
         }
         catch (Exception ex)
         {

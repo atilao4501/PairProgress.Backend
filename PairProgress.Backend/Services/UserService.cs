@@ -19,13 +19,23 @@ public class UserService : IUserService
         _context = context;
     }
 
-    public async Task EditUserByCode(UpdateUserInput updateUserInput)
+    public async Task EditUserByCode(UpdateUserInput updateUserInput, string userCode)
     {
-        var userDb = await _userManager.Users.FirstOrDefaultAsync(u => u.UserCode == updateUserInput.UserCode);
+        var userDb = await _userManager.Users.FirstOrDefaultAsync(u => u.UserCode == userCode);
         
         if (userDb == null)
         {
             throw new PersonalizedException("User not found with the provided code.");
+        }
+
+        if(CheckIfEmailExists(updateUserInput.Email) && updateUserInput.Email != userDb.Email)
+        {
+            throw new PersonalizedException("Email already in use.");
+        }
+
+        if (CheckIfUsernameExists(updateUserInput.Username) && updateUserInput.Username != userDb.UserName)
+        {
+            throw new PersonalizedException("Username already in use.");
         }
         
         userDb.UserName = updateUserInput.Username;
@@ -92,7 +102,7 @@ public class UserService : IUserService
                 userReturn.PairName = userPairDb.UserName;
             }
         }
-
+        
         return userReturn;
     }
 }
