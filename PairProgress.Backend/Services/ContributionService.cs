@@ -37,7 +37,7 @@ public class ContributionService : IContributionService
             Goal = goalDb,
             Amount = contributionInput.Amount,
             Date = contributionInput.Date,
-            User = goalDb.User
+            User = userDb
         };
         
         await _dbContext.Contributions.AddAsync(contribution);
