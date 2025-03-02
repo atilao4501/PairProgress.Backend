@@ -89,8 +89,9 @@ public class GoalService : IGoalService
     public async Task<Goal> GetGoalById(int goalId)
     {
         var goal = await _dbContext.Goals
-            .Include(g => g.User)
             .Include(g => g.Contributions)
+            .ThenInclude(c => c.User)
+            .Include(g => g.User)
             .FirstOrDefaultAsync(g => g.Id == goalId);
 
         if (goal == null)
