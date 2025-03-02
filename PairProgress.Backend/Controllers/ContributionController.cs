@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PairProgress.Backend.Models;
@@ -11,10 +12,12 @@ namespace PairProgress.Backend.Controllers;
 public class ContributionController : ControllerBase
 {
     private readonly IContributionService _contributionService;
+    private readonly IHttpContextAccessor _httpContextAccessor;
     
-        public ContributionController(IContributionService contributionService)
+        public ContributionController(IContributionService contributionService, IHttpContextAccessor httpContextAccessor)
         {
             _contributionService = contributionService;
+            _httpContextAccessor = httpContextAccessor;
         }
     
         [HttpPost]
@@ -22,7 +25,9 @@ public class ContributionController : ControllerBase
         {
             try
             {
-                await _contributionService.AddContributionAsync(contributionInput);
+                var userCode = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                
+                await _contributionService.AddContributionAsync(contributionInput, userCode);
                 return Ok(new DefaultReturn
                 {
                     Success = true,

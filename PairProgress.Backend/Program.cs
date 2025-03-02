@@ -92,7 +92,15 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    dbContext.Database.Migrate();
+    try
+    {
+        dbContext.Database.Migrate();
+    }
+    catch (Exception ex)
+    {
+        // Log the exception or handle it as needed
+        Console.WriteLine($"An error occurred while migrating the database: {ex.Message}");
+    }
 }
 
 
