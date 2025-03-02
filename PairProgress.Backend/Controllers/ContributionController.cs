@@ -25,7 +25,7 @@ public class ContributionController : ControllerBase
         {
             try
             {
-                var userCode = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                var userCode = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
                 
                 await _contributionService.AddContributionAsync(contributionInput, userCode);
                 return Ok(new DefaultReturn
