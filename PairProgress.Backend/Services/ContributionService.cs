@@ -14,7 +14,7 @@ public class ContributionService : IContributionService
         _dbContext = dbContext;
     }
     
-    public async Task AddContributionAsync(CreateContributionInput contributionInput)
+    public async Task AddContributionAsync(CreateContributionInput contributionInput, string userCode)
     {
         var goalDb = await _dbContext.Goals
             .Include(g => g.User)
@@ -24,12 +24,20 @@ public class ContributionService : IContributionService
             throw new PersonalizedException("Goal not found");
         }
         
+        var userDb = await _dbContext.Users
+            .FirstOrDefaultAsync(u => u.UserCode == userCode);
+        
+        if (userDb == null)
+        {
+            throw new PersonalizedException("User not found");
+        }
+        
         var contribution = new Contribution
         {
             Goal = goalDb,
             Amount = contributionInput.Amount,
             Date = contributionInput.Date,
-            User = goalDb.User
+            User = userDb
         };
         
         await _dbContext.Contributions.AddAsync(contribution);
